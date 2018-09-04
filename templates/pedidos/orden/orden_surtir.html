@@ -1,0 +1,16 @@
+{% extends 'pedidos/index.html'%}
+{%block accion%}
+Aprobar
+{%endblock accion%}
+{%block content%}
+<div>
+    <H1>Panel de Surtidor</H1>
+    {{setquery.numerodeorden}}
+    <form action="" method="POST" role="form">
+    {%csrf_token%}
+    {{form.as_p}}
+
+    <button  type="submit">Guardar</button>
+    </form>
+</div>
+{%endblock content%}

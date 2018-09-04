@@ -1,0 +1,76 @@
+{% extends 'pedidos/index.html'%}
+{%block accion%}
+Agregar Clientes
+{%endblock accion%}
+{%block content%}
+
+    <div class="row">
+        <div class="col-md-10 col-sm-12 col-xs-12">
+            <div class="form-group">
+        <form method="POST">
+            {%csrf_token%}
+                <div class="form-group col-md-6">
+                    <label class="control-label">Nombre del cliente</label>
+                        {{form.NOMBRE}}
+                    <small class="form-text text-muted" >{{form.NOMBRE.errors}}</small>
+                </div>
+                 <div class="form-group col-md-6">
+                    <label class="control-label">Calle y numero</label>
+                        {{form.DIRECCIÓN}}
+                    <small class="form-text text-muted" >{{form.DIRECCIÓN.errors}}</small>
+                </div>
+                 <div class="form-group col-md-6">
+                    <label class="control-label">Colonia</label>
+                        {{form.COLONIA}}
+                    <small class="form-text text-muted" >{{form.COLONIA.errors}}</small>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label">Poblacion</label>
+                        {{form.POBLACIÓN}}
+                    <small class="form-text text-muted" >{{form.POBLACIÓN.errors}}</small>
+                </div>
+                 <div class="form-group col-md-6">
+                    <label class="control-label">Municipio</label>
+                        {{form.MUNICIPIO}}
+                    <small class="form-text text-muted" >{{form.MUNICIPIO.errors}}</small>
+                </div>
+                 <div class="form-group col-md-6">
+                    <label class="control-label">Codigo Postal</label>
+                        {{form.CP}}
+                    <small class="form-text text-muted" >{{form.CP.errors}}</small>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label">RFC</label>
+                        {{form.RFC}}
+                    <small class="form-text text-muted" >{{form.RFC.errors}}</small>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label">Telefono</label>
+                        {{form.TELÉFONO}}
+                    <small class="form-text text-muted" >{{form.TELÉFONO.errors}}</small>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label">Correo</label>
+                        {{form.CORREO}}
+                    <small class="form-text text-muted" >{{form.CORREO.errors}}</small>
+                </div>
+                <div class="tile-footer d-flex justify-content-center col-md-12 ">
+                    <button class="btn btn-primary mr-3" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Guardar Cliente</button>
+                    <a class="btn btn-danger" href="{%url 'pedidos:clientes'%}"><i class="fa fa-fw fa-lg fa-times-circle"></i>Regresar</a>
+                </div>
+        </form>
+    </div>
+
+
+
+</div>
+
+        </div>
+    </div>
+
+{%endblock content%}
+
+
+{%block table%}
+
+{%endblock table%}

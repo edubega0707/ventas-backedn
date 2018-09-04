@@ -1,0 +1,90 @@
+{% extends 'pedidos/index.html'%}
+{%block accion%}
+Nuevo vendedor
+{%endblock accion%}
+{%block content%}
+
+    <div class="row">
+        <center><H2>Registrar Validador</H2></center>
+
+        <div class="col-lg-6  d-flex flex-row justify-content-center ">
+             <form method="POST" role="form" >
+                <div>
+                        {% csrf_token %}
+                        <div class="tile">
+                        <div class="tile-body">
+                            <div class="form-group">
+                                <label >Nombre de usuario</label>
+                                {{form.username}}
+                                <small class="help-block" >{{form.username.errors}}</small>
+                            </div>
+
+                            <div class="form-group">
+                                    <label >Nombre</label>
+                                    {{form.first_name}}
+                                    <small class="help-block" >{{form.first_name.errors}}</small>
+                            </div>
+                            <div class="form-group">
+                                    <label >Apellido</label>
+                                    {{form.last_name}}
+                                    <small class="help-block" >{{form.last_name.errors}}</small>
+                            </div>
+                            <div class="form-group">
+                                <label >Contraseña</label>
+                                {{form.password1}}
+                                <small class="help-block" >{{form.password1.errors}}</small>
+
+                            </div>
+                            <div class="form-group">
+                                <label >Confirmar Contraseña</label>
+                                {{form.password2}}
+                                <small class="help-block" >{{form.password2.errors}}</small>
+                            </div>
+                        </div>
+                            <div class="tile-footer boton-centrar">
+                                <button class="btn btn-primary mr-3" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Registrar</button>
+                                <a href="{% url 'accounts:profile' %}" class="btn btn-danger"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancelar<a/>
+                            </div>
+                        </div>
+                </div>
+     </form>
+        </div>
+    </div>
+
+
+{%endblock content%}
+
+{%block table%}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-bar-chart-o fa-fw"></i>Lista de validadores
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                 <div class="col-lg-12">
+                      <center><h2>Validadores registrados</h2></center>
+            <table class="table table-hover table-bordered table-responsive" id="sampleTable">
+                <thead>
+                    <tr>
+                        <th>usuario</th>
+                         <th>nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for user in usuarios%}
+                        <tr>
+                            <td>{{user.username}}</td>
+                            <td>{{user.first_name}} {{user.last_name}}</td>
+                        </tr>
+                    {%endfor%}
+         </tbody>
+     </table>
+
+                 </div>
+                </div>
+            </div>
+        </div>
+
+
+{%endblock table%}

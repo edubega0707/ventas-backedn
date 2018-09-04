@@ -1,0 +1,43 @@
+{% extends 'pedidos/index.html'%}
+{%block accion%}
+Aprobar
+{%endblock accion%}
+{%block content%}
+<div>
+    <H1>Panel de aprobación</H1>
+    {{setquery.numerodeorden}}
+    <form action="" method="POST" role="form">
+    {%csrf_token%}
+    {{form.as_p}}
+
+         {% if archivos or archivodos  %}
+              <strong>Archivos Multimedia:</strong><br>
+            {%for obj in archivos %}
+                <br>
+                <div class="div-archivos-multimedia">
+                    <a href="{{obj.impresion.url}}" target="_blank">  <i class="fas fa-file-signature fa-4x"></i> <p>Archivo 1</p> </a>
+                </div>
+            {%endfor%}
+
+            {%for obj in archivodos %}
+                <br>
+                <div class="div-archivos-multimedia">
+                    <a href="{{obj.impresiondos.url}}" target="_blank">  <i class="fas fa-file-signature fa-4x"></i> <p>Archivo 2</p> </a>
+                </div>
+            {%endfor%}
+            {% else %}
+             No se subieron imagenes o archivos multimedia.
+         {% endif %}
+
+
+        <div class="boton-centrar">
+            <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Guardar</button>
+            <a href="{% url 'accounts:profile' %}" class="btn btn-danger"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancelar</a>
+        </div>
+
+
+    </form>
+</div>
+{%endblock content%}
+
+ 

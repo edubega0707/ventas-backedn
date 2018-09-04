@@ -1,0 +1,66 @@
+{% extends 'pedidos/index.html'%}
+{%block accion%}
+Clientes Existentes
+{%endblock accion%}
+{%block content%}
+
+<center><h2>Tu Catalogo de productos en la pagina Principal</h2></center>
+
+    <a href="{%url 'index:nuevo'%}"><button type="button" class="btn btn-info">Agregar Producto al Catalogo</button></a>
+    <br>
+
+
+
+
+
+
+ <table class="table table-hover table-bordered table-responsive" id="TableClientes">
+         <thead>
+         <tr>
+                <th>Nombre del Producto</th>
+                <th>Categorias</th>
+                <th>Caracteristicas:</th>
+                <th>Archivo</th>
+                <th>Accion</th>
+         </tr>
+         </thead>
+         <tbody>
+          {%for obj in object_list%}
+              <tr>
+                  <td><a href="{% url 'index:detalle' obj.id  %}">{{obj.titulo}}</a></td>
+                <td>{{obj.categorias.categoria}}</td>
+                  <td>{{ obj.descripcion }}</td>
+                  <td>{%if obj.descargable %}
+                    <div>
+                        <a href="{{obj.descargable.url}}" target="_blank">ver archivo</a>
+                    </div>
+                    {%else%}
+                    <div> No se ha subido ningun archivo para este producto.</div>
+                    {%endif%}</td>
+                <td><a href="{% url 'index:modificar' obj.id  %}"><button>Editar</button></a></td>
+             </tr>
+         {%endfor%}
+         </tbody>
+     </table>
+{%endblock content%}
+
+
+{%block table%}
+
+{%endblock table%}
+
+     {% block javascript%}
+        <script type="text/javascript">
+            $('#TableClientes').DataTable( {
+            "scrollX": true,
+            "language": {
+           "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            }
+            } );
+
+
+        </script>
+
+
+
+     {% endblock javascript %}

@@ -1,0 +1,169 @@
+{% extends 'pedidos/index.html'%}
+{% load mathfilters %}
+{%block accion%}
+    Detalles de la orden: <strong>{{ object.numerodeorden }}</strong> Codigo de cliente: ( <strong>{{object.cliente.CODIGO}}</strong> )
+{%endblock accion%}
+{%block content%}
+               <center> <h2>Detalle de la Orden: {{ object.numerodeorden }}</h2>
+                            {% if "g" in object.status%}
+                            <span class="btn btn-primary"><font size="4">GENERADA</font></span>
+                            {% elif "a" in object.status %}
+                            <span class="btn btn-warning"><font size="4">APROBADA</font></span>
+                            {% elif "c" in object.status %}
+                            <span class="btn btn-danger"><font size="4">CANCELADA</font></span>
+                            {% elif "s" in object.status %}
+                            <span class="btn btn-success"><font size="4">SURTIDA</font></span>
+                            {% elif "v" in object.status %}
+                            <span class="btn btn-info"><font size="4">VALIDADA</font></span>
+                            {%endif%}
+               </center>
+    <br>
+    <br>
+    <strong>Codigo de cliente:</strong>{{ object.cliente.CODIGO}} <br>
+    <strong>Cliente:</strong>{{ object.cliente }}<br>
+    <strong>Telefono:</strong> {{ object.cliente.TELÉFONO }}
+    <br>
+    <strong>RFC:</strong> {{ object.cliente.RFC }}
+    <br>
+    <strong>Domicilio Fiscal:</strong> {{ object.cliente.DIRECCIÓN}},{{ object.cliente.COLONIA }}, {{ object.cliente.POBLACIÓN }}, {{ object.cliente.MUNICIPIO }},{{ object.cliente.CP }}
+    <br>
+    <hr/>
+    <strong>Vendedor: </strong>{{ object.vendedor }}
+    <br>
+    <strong>Forma de pago:</strong>
+             {% if 'CREDITO' in object.tipoorden %}
+             {{ object.tipoorden }}
+                <strong>Días de Crédito:</strong>  {{ object.diasdecredito }}
+                 {% else %}
+                 {{ object.tipoorden }}
+             {% endif %}
+    <br>
+    <strong>NOTA adicional del vendedor: </strong>{{ object.comentario }}
+    <br>
+
+       {% if archivos or archivodos  %}
+              <strong>Archivos Multimedia:</strong><br>
+            {%for obj in archivos %}
+                <br>
+                <div class="div-archivos-multimedia">
+                    <a href="{{obj.impresion.url}}" target="_blank">  <i class="fas fa-file-signature fa-4x"></i> <p>Archivo 1</p> </a>
+                </div>
+            {%endfor%}
+
+            {%for obj in archivodos %}
+                <br>
+                <div class="div-archivos-multimedia">
+                    <a href="{{obj.impresiondos.url}}" target="_blank">  <i class="fas fa-file-signature fa-4x"></i> <p>Archivo 2</p> </a>
+                </div>
+            {%endfor%}
+            {% else %}
+             No se subieron imagenes o archivos multimedia.
+       {% endif %}
+
+<br>
+<strong>Direccion de entrega:</strong>
+                 {{ object.domicilio_extra.calle }}, {{ object.domicilio_extra.colonia }}, {{ object.domicilio_extra.poblacion }}, {{ object.domicilio_extra.municipio }}, {{ object.domicilio_extra.cp }}
+
+<hr/>
+<h3>Productos:</h3>
+<!-- load humanize se utiliza para poder realiar el separador de miles en django-->
+{% load humanize %}
+<div class="table-responsive">
+        <table class="table table-hover table-bordered" >
+                <thead>
+  
+                <th>Producto:</th>
+                <th>Medida:</th>
+                <th>Cantidad:</th>
+                <th>Precio Unitario:</th>
+                <th>Total</th>
+  
+  
+                </thead>
+                <tbody>
+                {% for obj in pedido %}
+  
+                <tr>
+                <td> {{ obj.producto }}</td>
+                <td>{{ obj.producto.medida }}</td>
+                <td> {{ obj.cantidad }}</td>
+                <td>{% if 'CREDITO' in object.tipoorden %}
+                      {% if obj.cantidad <= obj.producto.Rango1 %}
+                          ${{ obj.producto.Precio1 }}
+                      {% elif obj.cantidad <= obj.producto.Rango2 and obj.cantidad > obj.producto.Rango1 %}
+                          ${{ obj.producto.Precio2 }}
+                      {% elif obj.cantidad <= obj.producto.Rango3 and  obj.cantidad > obj.producto.Rango2 %}
+                          ${{ obj.producto.Precio3 }}
+                      {% elif obj.cantidad <= obj.producto.Rango4 and obj.cantidad > obj.producto.Rango3 %}
+                          ${{ obj.producto.Precio4 }}
+                      {% elif obj.cantidad > obj.producto.Rango4 %}
+                          ${{ obj.producto.Precio4 }}
+                      {% endif %}
+                    {% elif 'CONTADO' in object.tipoorden %}
+                      {% if obj.cantidad <= obj.producto.Rango5 %}
+                          ${{ obj.producto.Precio5 }}
+                      {% elif obj.cantidad <= obj.producto.Rango6 and obj.cantidad > obj.producto.Rango5 %}
+                          ${{ obj.producto.Precio6 }}
+                      {% elif obj.cantidad <= obj.producto.Rango7 and obj.cantidad > obj.producto.Rango6 %}
+                          ${{ obj.producto.Precio7 }}
+                      {% elif obj.cantidad <= obj.producto.Rango8 and obj.cantidad > obj.producto.Rango7 %}
+                          ${{ obj.producto.Precio8 }}
+                      {% elif obj.cantidad > obj.producto.Rango8 %}
+                          ${{ obj.producto.Precio8 }}
+                      {% endif %}
+                    {% elif 'ANTICIPADO' in object.tipoorden %}
+                          {% if obj.cantidad <= obj.producto.Rango9 %}
+                              ${{ obj.producto.Precio9 }}
+                          {% elif obj.cantidad <= obj.producto.Rango10 and obj.cantidad > obj.producto.Rango9 %}
+                              ${{ obj.producto.Precio10 }}
+                          {% elif obj.cantidad <= obj.producto.Rango11 and obj.cantidad > obj.producto.Rango10 %}
+                              ${{ obj.producto.Precio11 }}
+                          {% elif obj.cantidad <= obj.producto.Rango12 and obj.cantidad > obj.producto.Rango11 %}
+                              ${{ obj.producto.Precio12 }}
+                          {% elif obj.cantidad > obj.producto.Rango12 %}
+                              ${{ obj.producto.Precio12 }}
+                          {% endif %}
+                    {% endif %}
+  
+                </td>
+  
+                <td>
+                    ${{obj.subtotal|floatformat:2|intcomma}}
+                </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+  
+  </table>
+</div>
+
+        <hr/>
+        <hr/>
+            <p align="right">
+            Subtotal: $ <strong>{{ object.total|sub:object.cargos }}</strong> <br>
+            Cargo:   $ <strong>{{ object.cargos|floatformat:2|intcomma}}</strong>
+            </p>
+         <div class="bordecard"> <center><br> Total: <font size="6"> <strong>$ {{ object.total|floatformat:2|intcomma }}</strong></font> mx </center> </div>
+        <br>
+<p align="center">
+<a href="{{object.get_absolute_url}}" target="_blank"><i class="fa fa-file-pdf-o fa-4x"></i><br>Ver PDF</a>
+</p>
+{% endblock content%}
+{% block javascript%}
+        <script type="text/javascript">
+            $('#Tableorden').DataTable( {
+            "scrollX": true,
+            "paging":   false,
+            "ordering": false,
+            "info":     false,
+            "language": {
+           "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            }
+            } );
+
+
+        </script>
+
+
+
+     {% endblock javascript %}

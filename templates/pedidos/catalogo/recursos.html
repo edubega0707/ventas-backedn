@@ -1,0 +1,20 @@
+{% extends 'pedidos/index.html'%}
+{%block accion%}
+ Plantillas de importacion de Tarifas y Clientes
+{%endblock accion%}
+{%block content%}
+
+    <div class="desc_plantillas">
+        <h3>Descarga la Plantilla</h3>
+        <p>Las siguientes plantillas estan hechas especialmente para la importacion de productos y clientes.</p>
+        <p>
+            Para importar tarifas y clientes solo descarga los formatos y sin modificar el archivo solo  copia
+            los nuevos registros a guarda el archivo e importalo en el sistema para actualizar la base de datos.
+        </p>
+    </div>
+    <div class="plantillas">
+        <a href="../static/plantillaproductos.xlsx" ><i class="fas fa-file-excel fa-4x"></i>Plantilla Tarifas</a>
+        <a href="../static/plantillacliente.xlsx" ><i class="fas fa-file-excel fa-4x"></i> Plantilla Clientes</a>
+    </div>
+
+{%endblock content%}

@@ -1,0 +1,14 @@
+{% extends 'pedidos/index.html'%}
+{% load mathfilters %}
+{%block accion%}
+{%endblock accion%}
+{%block content%}
+    <a class="btn btn-info" href="{% url 'index:nueva' %}">Nueva Categoria</a>
+    <br>
+    <br>
+<form action="." method="POST" enctype="multipart/form-data">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button  class="btn btn-primary mr-3"  type="submit">Guardar</button>  <a class="btn btn-danger" href="{% url 'index:catalogogeneral'%}">Regresar</a>
+    </form>
+{%endblock content%}

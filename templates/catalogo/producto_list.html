@@ -1,0 +1,55 @@
+{%extends 'catalog.html'%}
+{%block content%}
+<center><h2>Catalogo de productos</h2></center>
+
+<table class="style-table"  id="Tableorden">
+         <thead>
+         <tr>
+                <th><p>Producto</p></th>
+                <th><p>Caracteristicas</p></th>
+                <th><p>Categoria</p></th>
+                <th><p>Información</p></th>
+         </tr>
+         </thead>
+         <tbody>
+        {%for obj in object_list%}
+              <tr>
+                <td><h3>{{obj.titulo}}</h3></td>
+                <td><p>{{obj.descripcion}}</p></td>
+                <td><p>{{ obj.categorias }}</p></td>
+
+                <td class="td-link">
+                    {%if obj.descargable %}
+                    <div>
+                        <a href="{{obj.descargable.url}}" target="_blank"><img src="../../static/img/archivo.png" alt=""></a>
+                    </div>
+                    {%else%}
+                    <div>  Para más información contactanos</div>
+
+                    {%endif%}
+
+                </td>
+             </tr>
+         {%endfor%}
+         </tbody>
+ </table>
+
+
+
+
+{%endblock content%}
+{% block javascript%}
+        <script type="text/javascript">
+            $('#Tableorden').DataTable( {
+            "scrollX": true,
+            "language": {
+           "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            }
+            } );
+
+
+        </script>
+
+
+
+     {% endblock javascript %}

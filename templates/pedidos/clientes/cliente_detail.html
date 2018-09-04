@@ -1,0 +1,18 @@
+{% extends 'pedidos/index.html'%}
+{%block accion%}
+Detalles del Cliente {{object.NOMBRE}} <strong> ( {{ object.CODIGO }} )</strong>
+{%endblock accion%}
+{%block content%}
+    <a href="{% url 'pedidos:editarcliente' object.CODIGO  %}"><button>Editar Cliente</button></a><br>
+               <strong>Nombre: </strong> <h2>{{object.NOMBRE}}</h2> <br>
+                <strong>Direccion Fiscal: </strong>{{object.DIRECCIÓN}}
+                {{object.COLONIA}}
+                {{object.POBLACIÓN}}
+                {{object.MUNICIPIO}}
+                {{object.CP}} <br>
+                <strong>RFC: </strong>{{object.RFC}} <br>
+                <strong>Telefono: </strong>{{object.TÉLEFONO}} <br>
+                <strong>Correo electronico: </strong>{{object.CORREO}} <br>
+<a class="btn btn-danger" href="{%url 'pedidos:clientes'%}">Regresar</a>
+{%endblock content%}
+

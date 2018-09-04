@@ -1,0 +1,26 @@
+{% extends 'pedidos/index.html'%}
+{% load mathfilters %}
+{%block accion%}
+    Detalles del Producto: <strong>{{object.titulo}}</strong>
+{%endblock accion%}
+{%block content%}
+    <center><h2>{{object.titulo}}</h2><br></center>
+                    {%if object.descargable %}
+                        Archivo:
+                    <div>
+                        <a href="{{object.descargable.url}}" target="_blank">Descargar</a>
+                    </div>
+                    {%else%}
+                    <div> No se ha subido ningun archivo</div>
+                    {%endif%}
+    <br>
+    <strong>Caracteristicas:</strong>
+    <br>
+    {{ object.descripcion }}
+    <br>
+    <br>
+    <strong>Categoria: </strong>{{ object.categorias.categoria }}
+    <br>
+    <br>
+    <a class="btn btn-danger" href="{% url 'index:catalogogeneral'%}" >Regresar</a> <a class="btn btn-primary mr-3" href="{% url 'index:modificar' object.id  %}">Editar</a>
+{%endblock content%}

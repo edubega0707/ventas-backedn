@@ -1,0 +1,82 @@
+{% extends 'pedidos/index.html'%}
+{%block accion%}
+Ordenes Existentes
+{%endblock accion%}
+{%block content%}
+<div>
+       <center><h2>Tus Ordenes Pendientes de Aprobar</h2></center>
+<ul>
+
+
+
+                <table class="table table-hover table-bordered table-responsive table-center-rows"  id="Tableorden">
+                    <thead>
+                          <tr>
+                              <th>Fecha</th>
+                            <th>Detalle<br> Nº Ordern</th>
+                            <th>Cliente</th>
+                              <th>Forma de Pago</th>
+                              <th>Status</th>
+                              <th>Vendedor</th>
+                              <th>Total</th>
+                              <th>Revisar para aprobar</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          {%for obj in object_list%}
+                          <tr>
+                              <td>{{obj.fechageneracion}}</td>
+                              <td><center><a href="{%url 'pedidos:verdetalle' obj.id%}"><i class="fa fa-list-alt"></i> Ver: {{obj.numerodeorden}}</a><br><br><a href="{{obj.get_absolute_url}}" target="_blank"><i class="fas fa-file-pdf fa-4x"></i><br>Descarga PDF</a></center></td>
+                            <td>( id: <strong>{{obj.cliente.CODIGO}}</strong> ) {{obj.cliente}}</center></td>
+                              <td>{{obj.tipoorden}}</td>
+                            <td>
+                            {% if "g" in obj.status%}
+
+                            <span class="btn btn-primary">GENERADA</span>
+                            {% elif "a" in obj.status %}
+                            <span class="btn btn-warning">APROBADA</span>
+                            {% elif "c" in obj.status %}
+                            <span class="btn btn-danger">CANCELADA</span>
+                            {% elif "e" in obj.status %}
+                            <span class="btn btn-info">REIMPRESA</span>
+
+                            <span class="btn-primary"> Generada </span>
+                            {% elif "a" in obj.status %}
+                            <span class="btn-warning"> Aprobada </span>
+                            {% elif "c" in obj.status %}
+                            <span class="btn-danger"> Cancelada </span>
+                            {% elif "e" in obj.status %}
+                            <span class="btn-info"> Reimpresa </span>
+
+                            {% elif "s" in obj.status %}
+                            <span class="btn btn-success"> SURTIDA </span>
+                            {%endif%}
+                            </td>
+
+                              <td>{{ obj.vendedor}}</td>
+                              {% load humanize %}
+                              <td> $ {{obj.total|floatformat:2|intcomma}}</td>
+                              <td><center><a href="{%url 'pedidos:aprobar' obj.id%}"><i class="fa fa-check-square fa-4x"></i><br>Revisar</a></center></td>
+                          </tr>
+                          {%endfor%}
+                      </tbody>
+                </table>
+
+</ul>
+</div>
+{%endblock content%}
+{% block javascript%}
+        <script type="text/javascript">
+            $('#Tableorden').DataTable( {
+            "scrollX": true,
+            "language": {
+           "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            }
+            } );
+
+
+        </script>
+
+
+
+     {% endblock javascript %}

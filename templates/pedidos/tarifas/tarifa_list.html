@@ -1,0 +1,101 @@
+{% extends 'pedidos/index.html'%}
+{%block accion%}
+Tarifas Existentes
+{%endblock accion%}
+{%block content%}
+
+<center><h2>Lista de Precios</h2>
+    <br>
+<span class="btn btn-primary">Credito</span>
+<span class="btn btn-info">Contado al Recibir</span>
+<span class="btn btn-success">Contado al Anticipado</span>
+</center>
+
+ <table class="table table-hover table-bordered table-responsive" id="Tableprecio">
+         <thead>
+         <tr>
+                <th>Nombre del producto</th>
+                <th><span class="btn btn-primary">Precio1</span></th>
+                <th><span class="btn btn-primary">Rango1</span></th>
+                <th><span class="btn btn-primary">Precio2</span></th>
+             <th><span class="btn btn-primary">Rango2</span></th>
+             <th><span class="btn btn-primary">Precio3</span></th>
+             <th><span class="btn btn-primary">Rango3</span></th>
+             <th><span class="btn btn-primary">Precio4</span></th>
+             <th><span class="btn btn-primary">Rango4</span></th>
+             <th><span class="btn btn-info">Precio5</span></th>
+             <th><span class="btn btn-info">Rango5</span></th>
+             <th><span class="btn btn-info">Precio6</span></th>
+             <th><span class="btn btn-info">Rango6</span></th>
+             <th><span class="btn btn-info">Precio7</span></th>
+             <th><span class="btn btn-info">Rango7</span></th>
+             <th><span class="btn btn-info">Precio8</span></th>
+             <th><span class="btn btn-info">Rango8</span></th>
+             <th><span class="btn btn-success">Precio9</span></th>
+             <th><span class="btn btn-success">Rango9</span></th>
+             <th><span class="btn btn-success">Precio10</span></th>
+             <th><span class="btn btn-success">Rango10</span></th>
+             <th><span class="btn btn-success">Precio11</span></th>
+             <th><span class="btn btn-success">Rango11</span></th>
+             <th><span class="btn btn-success">Precio12</span></th>
+             <th><span class="btn btn-success">Rango12</span></th>
+             <th>medida</th>
+             <th>Id Material</th>
+         </tr>
+         </thead>
+         <tbody>
+          {%for obj in object_list%}
+              <tr>
+              <td>{{obj.Nombre}}</td>
+                <td>{{obj.Precio1}}</td>
+                <td>{{obj.Rango1}}</td>
+                <td>{{obj.Precio2}}</td>
+                <td>{{obj.Rango2}}</td>
+                <td>{{obj.Precio3}}</td>
+                <td>{{obj.Rango3}}</td>
+                <td>{{obj.Precio4}}</td>
+                <td>{{obj.Rango4}}</td>
+                <td>{{obj.Precio5}}</td>
+              <td>{{obj.Rango5}}</td>
+              <td>{{obj.Precio6}}</td>
+              <td>{{obj.Rango6}}</td>
+              <td>{{obj.Precio7}}</td>
+              <td>{{obj.Rango7}}</td>
+              <td>{{obj.Precio8}}</td>
+              <td>{{obj.Rango8}}</td>
+              <td>{{obj.Precio9}}</td>
+              <td>{{obj.Rango9}}</td>
+              <td>{{obj.Precio10}}</td>
+              <td>{{obj.Rango10}}</td>
+              <td>{{obj.Precio11}}</td>
+              <td>{{obj.Rango11}}</td>
+              <td>{{obj.Precio12}}</td>
+              <td>{{obj.Rango12}}</td>
+              <td>{{obj.medida}}</td>
+              <td>{{obj.IdMaterial}}</td>
+             </tr>
+         {%endfor%}
+         </tbody>
+     </table>
+{%endblock content%}
+
+
+{%block table%}
+
+{%endblock table%}
+
+     {% block javascript%}
+        <script type="text/javascript">
+            $('#Tableprecio').DataTable( {
+            "scrollX": true,
+            "language": {
+           "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            }
+            } );
+
+
+        </script>
+
+
+
+     {% endblock javascript %}

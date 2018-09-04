@@ -1,0 +1,83 @@
+{% extends 'pedidos/index.html'%} {%block accion%} Ordenes Existentes {%endblock accion%} {%block content%}
+<div>
+    <center>
+        <h2>Tus Ordenes</h2>
+    </center>
+    <ul>
+
+
+
+        <table class="table table-hover table-bordered table-responsive" id="Tableorden">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Detalle
+                        <br> Nº Ordern</th>
+                    <th>Cliente</th>
+                    <th>Forma de Pago</th>
+                    <th>Status</th>
+                    <th>Vendedor</th>
+                    <th>Total</th>
+                    <th>Descarga</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for obj in object_list%}
+                <tr>
+                    <td>{{obj.fechageneracion}}</td>
+                    <td>
+                        <a href="{%url 'pedidos:verdetalle' obj.id%}">{{obj.numerodeorden}}</a>
+                    </td>
+                    <td>( id:
+                        <strong>{{obj.cliente.CODIGO}}</strong> ) {{obj.cliente}}</td>
+                    <td>{{obj.tipoorden}}</td>
+                    <td class="td-center">
+                        {% if "g" in obj.status%}
+                        <span class="btn btn-primary">GENERADA</span>
+                        {% elif "a" in obj.status %}
+                        <span class="btn btn-warning">APROBADA</span>
+                        {% elif "c" in obj.status %}
+                        <span class="btn btn-danger">CANCELADA</span>
+                        {% elif "e" in obj.status %}
+                        <span class="btn btn-info">REIMPRESA</span>
+
+                        {% elif "s" in obj.status %}
+                        <span class="btn btn-success"> SURTIDA </span>
+                        {% elif "i" in obj.status %}
+                        <span class="btn btn-warning"> SURTIDA INCOMPLETO</span>
+
+                        {% elif "v" in obj.status %}
+                        <span class="btn btn-info"> VALIDADA </span>
+                        {%endif%}
+                    </td>
+
+
+
+                    <td>{{ obj.vendedor.first_name }} {{ obj.vendedor.last_name}}</td>
+                    {% load humanize %}
+                    <td>$ {{obj.total|floatformat:2|intcomma}}</td>
+                    <td>
+                        <a href="{{obj.get_absolute_url}}" target="_blank">
+                            <i class="fas fa-file-pdf fa-4x"></i>
+                        </a>
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+
+    </ul>
+</div>
+{%endblock content%} {% block javascript%}
+<script type="text/javascript">
+    $('#Tableorden').DataTable({
+        "scrollX": true,
+        "language": {
+            "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+        }
+    });
+</script>
+
+
+
+{% endblock javascript %}

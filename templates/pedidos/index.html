@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Admin</title>
+
+  {% include 'pedidos/snippets/css.html'%}
+
+    {%block extrajs%}
+
+    {%endblock extrajs%}
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" >Nacional Ferretera de Hidalgo</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+              
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                       {{user.username}} <i class="fa fa-user fa-fw"></i> <i class="fas fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="{% url 'index:manual' %}"><i class="fas fa-info-circle fa-lg "></i>Manuales</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out-alt fa-lg "></i>Cerrar Sesion</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+
+
+                         <!-- vendedores -->
+                        {% if perms.pedidos.vendedor %}
+                        <li >
+                            <a href="{% url 'index:app'%}" >
+                                <i class="fas  fa-play fa-2x"></i><span>App</span>
+                            </a>
+                        </li>
+
+                        {% endif %}
+
+
+                        {% if user.is_superuser %}
+                        <li >
+                            <a href="{% url 'pedidos:clientes'%}" >
+                                <i class="fas fa-trophy fa-2x"></i><span>Clientes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href=""><i class="fas fa-file fa-2x"></i>Ordenes</a>
+                             <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="{% url 'pedidos:vergenerada'%}"> <i class="fas fa-check-double fa-lg"></i>Pendientes de aprobar</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'pedidos:ordenlist'%}">  <i class="fas fa-clipboard-list fa-lg"></i>Historial de ordenes</a>
+                                </li>
+                                 <li>
+                                    <a href="{% url 'productos:tarifa'%}">  <i class="fas fa-list fa-lg"></i>Lista de Precios</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li >
+                            <a href="{% url 'index:catalogogeneral'%}" >
+                                <i class="fas fa-archive fa-2x"></i><span>Catalogo</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href=""><i class="fas fa-users fa-2x "></i>Registrar</a>
+                             <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="{%url 'accounts:registrarvendedor'%}"> <i class="fas fa-chart-line fa-2x"></i>Vendedores</a>
+                                </li>
+                                 <li>
+                                    <a href="{%url 'accounts:registravalidador'%}"><i class="fas fa-check-square fa-2x"></i>Validadores</a>
+                                </li>
+                                <li>
+                                    <a href="{%url 'accounts:registrarcajero'%}"><i class="fas fa-money-bill-alt fa-2x"></i> Cajeros</a>
+                                </li>
+                                <li>
+                                    <a href="{%url 'accounts:registrasurtidor'%}"><i class="fas fa-shuttle-van fa-2x"></i>Surtidores</a>
+                                </li>
+                            </ul>
+                        </li>
+                         <li >
+                            <a href="{% url 'catalogo:recursos'%}" >
+                                <i class="fas fa-arrow-alt-circle-down fa-2x"></i><span>Recursos</span>
+                            </a>
+                        </li>
+
+                        {% endif %}
+
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+
+            <!-- /.row -->
+            {%block panelcontrol%}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Panel de control</h1>
+                    </div>
+                <!-- /.col-lg-12 -->
+                </div>
+                <div class="row">
+
+                    {%block panel%}
+
+
+                    {%endblock panel%}
+
+                </div>
+
+            {%endblock panelcontrol%}
+
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="panel panel-default">
+
+                        <div class="panel-heading">
+
+                            <i class="fa fa-bar-chart-o fa-fw"></i>
+                            {%block accion%}
+
+                            {%endblock accion%}
+                            <div class="pull-right">
+
+                            </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+
+                            {%block content%}
+
+                                <div>
+       <center><h2>Tus Ordenes</h2></center>
+<ul>
+
+
+
+                <table class="table table-hover table-bordered table-responsive" id="Tableorden">
+                    <thead>
+                          <tr>
+                              <th>Fecha</th>
+                            <th>Detalle<br> Nº Ordern</th>
+                            <th>Cliente</th>
+                              <th>Forma de Pago</th>
+                            <th>Status</th>
+                              <th>Vendedor</th>
+                              <th>Total</th>
+                              <th>Descarga</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          {%for obj in ordenes%}
+                          <tr>
+                              <td>{{obj.fechageneracion}}</td>
+                            <td><a href="{%url 'pedidos:verdetalle' obj.id%}">{{obj.numerodeorden}}</a></td>
+                            <td>( id: <strong>{{obj.cliente.CODIGO}}</strong> ) {{obj.cliente}}</td>
+                              <td>{{obj.tipoorden}}</td>
+                            <td>
+                            {% if "g" in obj.status%}
+                            <span class="btn btn-primary">GENERADA</span>
+                            {% elif "a" in obj.status %}
+                            <span class="btn btn-warning">APROBADA</span>
+                            {% elif "c" in obj.status %}
+                            <span class="btn btn-danger">CANCELADA</span>
+                            {% elif "e" in obj.status %}
+                            <span class="btn btn-info">REIMPRESA</span>
+
+                            {% elif "s" in obj.status %}
+                            <span class="btn btn-success"> SURTIDA </span>
+                                 {% elif "i" in obj.status %}
+                             <span class="btn btn-warning"> SURTIDA INCOMPLETO</span>
+
+
+
+                                {% elif "v" in obj.status %}
+                            <span class="btn btn-info"> VALIDADA </span>
+                            {%endif%}
+
+
+
+
+                            </td>
+
+
+
+                              <td>{{ obj.vendedor.first_name }} {{ obj.vendedor.last_name}}</td>
+                              <td>{{obj.total}}</td>
+                              <td><a href="{{obj.get_absolute_url}}" target="_blank"><i class="fa fa-file-pdf-o fa-4x"></i></a></td>
+                          </tr>
+                          {%endfor%}
+                      </tbody>
+                </table>
+
+</ul>
+</div>
+                            {%endblock content%}
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                {%block table%}
+
+                {%endblock table%}
+                </div>
+                <!-- /.col-lg-8 -->
+          
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+     {% include 'pedidos/snippets/js.html'%}
+
+
+        {% block javascript%}
+        <script type="text/javascript">
+            $('#sampleTable').DataTable( {
+
+            "language": {
+           "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            }
+            } );
+
+             $('#TableCredito').DataTable( {
+
+            "language": {
+           "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            }
+            } );
+
+             $('#TableContado').DataTable( {
+
+            "language": {
+           "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            }
+            } );
+
+             $('#TableContadoAnticipado').DataTable( {
+
+            "language": {
+           "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            }
+            } );
+
+        </script>
+
+
+
+     {% endblock javascript %}
+
+</body>
+
+</html>

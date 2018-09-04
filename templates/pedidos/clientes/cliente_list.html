@@ -1,0 +1,71 @@
+{% extends 'pedidos/index.html'%}
+{%block accion%}
+Clientes Existentes
+{%endblock accion%}
+{%block content%}
+
+<center><h2>Tus Clientes</h2></center>
+
+    <a href="{%url 'pedidos:addcliente'%}"><button type="button" class="btn btn-info">Agregar cliente</button></a>
+
+
+
+
+
+
+ <table class="table table-hover table-bordered table-responsive" id="TableClientes">
+         <thead>
+         <tr>
+                <th>Nombre del cliente</th>
+                <th>Codigo de cliente</th>
+                <th>Dirección</th>
+                <th>Cononia</th>
+                <th>Población</th>
+                <th>Municipio</th>
+                <th>CP</th>
+                <th>RFC</th>
+                <th>Teléfono</th>
+                <th>Correo</th>
+                <th>Acción</th>
+         </tr>
+         </thead>
+         <tbody>
+          {%for obj in object_list%}
+              <tr>
+                  <td><a href="{% url 'pedidos:detallecliente' obj.CODIGO  %}">{{obj.NOMBRE}}</a></td>
+                <td>{{obj.CODIGO}}</td>
+                <td>{{obj.DIRECCIÓN}}</td>
+                <td>{{obj.COLONIA}}</td>
+                <td>{{obj.POBLACIÓN}}</td>
+                <td>{{obj.MUNICIPIO}}</td>
+                <td>{{obj.CP}}</td>
+                <td>{{obj.RFC}}</td>
+                <td>{{obj.TELÉFONO}}</td>
+                <td>{{obj.CORREO}}</td>
+                <td><a href="{% url 'pedidos:editarcliente' obj.CODIGO  %}"><button>Editar</button></a></td>
+             </tr>
+         {%endfor%}
+         </tbody>
+     </table>
+{%endblock content%}
+
+
+{%block table%}
+
+{%endblock table%}
+
+     {% block javascript%}
+        <script type="text/javascript">
+            $('#TableClientes').DataTable( {
+            "scrollX": true,
+            "language": {
+           "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            }
+            } );
+
+
+        </script>
+
+
+
+     {% endblock javascript %}
